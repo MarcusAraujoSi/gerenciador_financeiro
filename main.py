@@ -1,6 +1,14 @@
 from fastapi import FastAPI
-from app.routes import transacoes_router
+from app.routes import transactions_router, category_router
 
+# Initialize the FastAPI application
 app = FastAPI()
 
-app.include_router(transacoes_router.router)
+# Include the transaction and category routers under the /api prefix
+app.include_router(transactions_router.router, prefix="/api")
+app.include_router(category_router.router, prefix="/api")
+
+# Root endpoint (health check or welcome message)
+@app.get("/")
+def read_root():
+    return {"message": "Olá, Chiclete! Your API is running 🚀"}
