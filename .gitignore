@@ -1,2 +1,29 @@
-venv/ 
+# Ambiente virtual
+venv/
+.env
 __pycache__/
+*.py[cod]
+*.sqlite3
+*.db
+*.log
+
+# Cache do Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Arquivos de sistema (Windows/macOS)
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários
+*.bak
+*.swp
+*.swo

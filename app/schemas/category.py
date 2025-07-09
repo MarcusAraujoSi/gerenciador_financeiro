@@ -4,7 +4,7 @@ class CategoryCreate(BaseModel):
     """Schema for creating a new category."""
     name: str
 
-class CategoryResponse(BaseModel):
+class CategoryOut(BaseModel):
     """Schema for returning a category with its ID."""
     id: int
     name: str

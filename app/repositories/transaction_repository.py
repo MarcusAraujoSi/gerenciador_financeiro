@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import extract
 from app.models.transaction import Transaction
 from app.schemas.transaction import TransactionCreate
 
@@ -17,3 +18,11 @@ def save_transaction(db: Session, transaction_data: TransactionCreate):
 
 def get_all_transactions(db: Session):
     return db.query(Transaction).all()
+
+def get_transactions_by_month(year: int, month: int, db: Session):
+    return (
+        db.query(Transaction)
+        .filter(extract("year", Transaction.date) == year)
+        .filter(extract("month", Transaction.date) == month)
+        .all()
+    )
