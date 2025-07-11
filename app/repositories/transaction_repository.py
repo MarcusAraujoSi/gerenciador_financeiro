@@ -9,7 +9,8 @@ def save_transaction(db: Session, transaction_data: TransactionCreate):
         type=transaction_data.type,
         category_id=transaction_data.category_id,
         description=transaction_data.description,
-        amount=transaction_data.amount
+        amount=transaction_data.amount,
+        pocket_id=transaction_data.pocket_id
     )
     db.add(new_transaction)
     db.commit()

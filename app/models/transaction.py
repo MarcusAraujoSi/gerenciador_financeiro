@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, Date, CheckConstraint
+from sqlalchemy import String, Integer, Float, Date, CheckConstraint, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column
 from app.database.connection import Base
 
 class Transaction(Base):
@@ -6,10 +7,11 @@ class Transaction(Base):
     __table_args__ = (
         CheckConstraint("type IN ('income', 'expense')", name="check_transaction_type"),
     )
-    
-    id = Column(Integer, primary_key=True, index=True)
-    date = Column(Date, nullable=False)
-    type = Column(String, nullable=False)
-    category_id = Column(Integer, nullable=False)
-    description = Column(String, nullable=False)
-    amount = Column(Float, nullable=False)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    date: Mapped[Date] = mapped_column(Date, nullable=False)
+    type: Mapped[str] = mapped_column(String, nullable=False)
+    category_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    description: Mapped[str] = mapped_column(String, nullable=False)
+    amount: Mapped[float] = mapped_column(Float, nullable=False)
+    pocket_id: Mapped[int | None] = mapped_column(ForeignKey("pockets.id"), nullable=True)

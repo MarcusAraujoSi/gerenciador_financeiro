@@ -1,23 +1,24 @@
-from typing import Literal
+from typing import Literal, Optional
 from pydantic import BaseModel
 from datetime import date
 
-# Used when creating a new transaction
-class TransactionCreate(BaseModel):
+class TransactionBase(BaseModel):
+    """Shared properties between create and return."""
     date: date
-    type: Literal["income", "expense"]
     category_id: int
     description: str
     amount: float
+    pocket_id: Optional[int] = None
+
+# Used when creating a new transaction
+class TransactionCreate(TransactionBase):
+    type: Literal["income", "expense"]
+    
 
 # Used when returning transaction data via API
-class TransactionOut(BaseModel):
+class TransactionOut(TransactionBase):
     id: int
-    date: date
     type: str
-    category_id: int
-    description: str
-    amount: float
-
+    
     class Config:
         orm_mode = True  # Allows returning SQLAlchemy models directly

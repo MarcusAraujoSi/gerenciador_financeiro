@@ -3,7 +3,7 @@ from app.models.category import Category
 from app.schemas.category import CategoryCreate
 
 def save_category(db: Session, category_data: CategoryCreate):
-    new_category = Category(name=category_data.name)
+    new_category = Category(**category_data.model_dump())
     db.add(new_category)
     db.commit()
     db.refresh(new_category)

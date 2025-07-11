@@ -1,13 +1,19 @@
 from pydantic import BaseModel
+from app.models.category import PocketTypeEnum
+from typing import Optional
 
-class CategoryCreate(BaseModel):
-    """Schema for creating a new category."""
+class CategoryBase(BaseModel):
+    """Shared properties between create and return."""
     name: str
+    pocket_type: Optional[PocketTypeEnum] = None
 
-class CategoryOut(BaseModel):
+class CategoryCreate(CategoryBase):
+    """Schema for creating a new category."""
+    pass
+
+class CategoryOut(CategoryBase):
     """Schema for returning a category with its ID."""
     id: int
-    name: str
-
+    
     class Config:
         orm_mode = True
