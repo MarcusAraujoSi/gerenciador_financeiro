@@ -1,4 +1,4 @@
-from sqlalchemy import String, Integer, Enum
+from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database.connection import Base
 import enum
@@ -12,4 +12,3 @@ class Category(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
-    pocket_type: Mapped[PocketTypeEnum | None] = mapped_column(Enum(PocketTypeEnum), nullable=True)

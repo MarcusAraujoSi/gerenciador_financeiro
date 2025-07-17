@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Literal, Optional, List
 from pydantic import BaseModel
 from datetime import date
 
@@ -8,17 +8,14 @@ class TransactionBase(BaseModel):
     category_id: int
     description: str
     amount: float
-    pocket_id: Optional[int] = None
 
 # Used when creating a new transaction
 class TransactionCreate(TransactionBase):
     type: Literal["income", "expense"]
-    
+    pocket_ids: Optional[List[int]] = None 
 
 # Used when returning transaction data via API
 class TransactionOut(TransactionBase):
     id: int
     type: str
-    
-    class Config:
-        orm_mode = True  # Allows returning SQLAlchemy models directly
+    pocket_ids: Optional[List[int]] = []  # Pockets linked to this transaction

@@ -14,6 +14,3 @@ class PocketCreate(PocketBase):
 class PocketOut(PocketBase):
     """Schema used to return a Pocket with its ID."""
     id: int
-
-    class Config:
-        orm_mode = True  # Allows returning ORM objects directly

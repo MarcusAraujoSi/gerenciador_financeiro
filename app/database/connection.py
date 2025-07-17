@@ -24,5 +24,5 @@ def get_db():
 
 # Function to create all tables based on models
 def create_tables():
-    from app.models import transaction, category, pocket  # Ensure all models are imported
+    from app import models  # Ensure all models are imported
     Base.metadata.create_all(bind=engine)

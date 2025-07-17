@@ -19,7 +19,6 @@ app.include_router(category_router.router, prefix="/api")
 app.include_router(summary_router.router, prefix="/api")
 app.include_router(pocket_router.router, prefix="/api")
 
-# Health check or welcome message
-@app.get("/")
+@app.get("/", tags=["Status"])
 def read_root():
     return {"message": "Olá, Chiclete! Your API is running 🚀"}

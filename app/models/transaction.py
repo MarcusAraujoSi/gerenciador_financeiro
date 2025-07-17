@@ -14,4 +14,3 @@ class Transaction(Base):
     category_id: Mapped[int] = mapped_column(Integer, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    pocket_id: Mapped[int | None] = mapped_column(ForeignKey("pockets.id"), nullable=True)
