@@ -7,7 +7,8 @@ from .transaction_pocket import (
 from .transaction import (
     TransactionBase,
     TransactionCreate,
-    TransactionOut
+    TransactionOut,
+    TransactionUpdate
 )
 
 from .category import (

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import extract
 from app.models import Transaction, TransactionPocket
-from app.schemas import TransactionCreate
+from app.schemas import TransactionCreate, TransactionUpdate
 from typing import List
 
 def save_transaction(db: Session, transaction_data: TransactionCreate) -> Transaction:
@@ -17,6 +17,18 @@ def save_transaction(db: Session, transaction_data: TransactionCreate) -> Transa
     db.commit()
     db.refresh(new_transaction)
     return new_transaction
+
+def update(db: Session, transaction_id: int, transaction_data: TransactionUpdate):
+    transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+    if not transaction:
+        raise Exception("Transaction not found")
+    
+    for field, value in transaction_data.model_dump().items():
+        setattr(transaction, field, value)
+
+    db.commit()
+    db.refresh(transaction)
+    return transaction
 
 def get_all_transactions(db: Session) -> List[Transaction]:
     """Retrieve all transactions from the database."""

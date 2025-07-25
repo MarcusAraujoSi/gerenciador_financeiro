@@ -6,7 +6,8 @@ from app.schemas import CategoryOut
 from app.repositories.category_repository import (
     save_category,
     get_all_categories,
-    get_category_by_id
+    get_category_by_id,
+    update_category_by_id  # 🔹 função chamada do repositório
 )
 
 def create_category(category_data: CategoryCreate, db: Session) -> CategoryOut:
@@ -25,6 +26,12 @@ def get_all(db: Session) -> list[CategoryOut]:
 
 def get_by_id(category_id: int, db: Session) -> CategoryOut:
     category = get_category_by_id(db, category_id)
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    return CategoryOut.model_validate(category, from_attributes=True)
+
+def update_category(category_id: int, category_data: CategoryCreate, db: Session) -> CategoryOut:
+    category = update_category_by_id(db, category_id, category_data)
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
     return CategoryOut.model_validate(category, from_attributes=True)

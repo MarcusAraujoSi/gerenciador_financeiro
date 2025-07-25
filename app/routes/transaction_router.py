@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
-from app.schemas import TransactionCreate, TransactionOut
+from app.schemas import TransactionCreate, TransactionOut, TransactionUpdate
 from app.controllers import transaction_controller
 
 router = APIRouter(
@@ -44,3 +44,8 @@ def get_pocket_ids_by_transaction_route(transaction_id: int, db: Session = Depen
     - Returns a list of pocket IDs linked to the transaction
     """
     return transaction_controller.get_pocket_ids(transaction_id, db)
+
+# PUT: Update transaction by ID
+@router.put("/{transaction_id}", response_model=TransactionOut)
+def update_transaction_route(transaction_id: int, transaction_data: TransactionUpdate, db: Session = Depends(get_db)):
+    return transaction_controller.update_transaction(transaction_id, transaction_data, db)

@@ -15,3 +15,15 @@ def get_all_pockets(db: Session) -> list[Pocket]:
 
 def get_pocket_by_id(db: Session, pocket_id: int) -> Pocket | None:
     return db.query(Pocket).filter(Pocket.id == pocket_id).first()
+
+def update_pocket_by_id(db: Session, pocket_id: int, pocket_data: PocketCreate):
+    pocket = db.query(Pocket).filter(Pocket.id == pocket_id).first()
+    if not pocket:
+        return None
+
+    for key, value in pocket_data.model_dump().items():
+        setattr(pocket, key, value)
+
+    db.commit()
+    db.refresh(pocket)
+    return pocket

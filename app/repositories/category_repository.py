@@ -14,3 +14,15 @@ def get_all_categories(db: Session):
 
 def get_category_by_id(db: Session, category_id: int):
     return db.query(Category).filter(Category.id == category_id).first()
+
+def update_category_by_id(db: Session, category_id: int, category_data: CategoryCreate):
+    category = db.query(Category).filter(Category.id == category_id).first()
+    if not category:
+        return None
+
+    for key, value in category_data.model_dump().items():
+        setattr(category, key, value)
+
+    db.commit()
+    db.refresh(category)
+    return category

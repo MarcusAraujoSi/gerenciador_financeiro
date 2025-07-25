@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.schemas import TransactionCreate, TransactionOut
+from app.schemas import TransactionCreate, TransactionOut, TransactionUpdate
 from app.models import Transaction
 from app.repositories import transaction_repository, transaction_pocket_repository
 from app.services import transaction_service
@@ -10,6 +10,9 @@ def create_transaction(transaction_data: TransactionCreate, db: Session) -> Tran
         return transaction_service.create_transaction_with_pockets(transaction_data, db)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error while creating transaction: {str(e)}")
+
+def update_transaction(transaction_id: int, transaction_data: TransactionUpdate, db: Session):
+    return transaction_repository.update(db, transaction_id, transaction_data)
 
 def get_all(db: Session) -> list[TransactionOut]:
     try:
@@ -36,3 +39,4 @@ def get_pocket_ids(transaction_id: int, db: Session) -> list[int]:
         return transaction_pocket_repository.get_pocket_ids_by_transaction(db, transaction_id)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error while fetching pocket IDs: {str(e)}")
+    

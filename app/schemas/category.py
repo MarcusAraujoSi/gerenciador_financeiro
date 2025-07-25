@@ -10,6 +10,9 @@ class CategoryCreate(CategoryBase):
     """Schema for creating a new category."""
     pass
 
+class CategoryUpdate(CategoryBase):
+    pass
+
 class CategoryOut(CategoryBase):
     """Schema for returning a category with its ID."""
     id: int
